@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRecruiter.Api", "BasicRecruiter.Api\BasicRecruiter.Api.csproj", "{59ABD12B-1244-424F-B329-120BC09180BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicRecruiter.Data", "BasicRecruiter.Data\BasicRecruiter.Data.csproj", "{BE3F5111-584B-4C5E-B6E2-F01D876AEAAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59ABD12B-1244-424F-B329-120BC09180BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59ABD12B-1244-424F-B329-120BC09180BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59ABD12B-1244-424F-B329-120BC09180BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59ABD12B-1244-424F-B329-120BC09180BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3F5111-584B-4C5E-B6E2-F01D876AEAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3F5111-584B-4C5E-B6E2-F01D876AEAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3F5111-584B-4C5E-B6E2-F01D876AEAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3F5111-584B-4C5E-B6E2-F01D876AEAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F50D3F6B-71A3-437B-9C33-7AA56F3D1643}
+	EndGlobalSection
+EndGlobal
