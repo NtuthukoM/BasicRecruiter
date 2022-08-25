@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicRecruiter.Data
+namespace BasicRecruiter.Domain
 {
     //shortlised, interview, accepted, rejected
-    internal class ApplicantStatus
+    public class ApplicantStatus
     {
         public string StatusDescription { get; set; }
     }

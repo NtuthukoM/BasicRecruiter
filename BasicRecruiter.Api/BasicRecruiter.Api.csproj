@@ -15,4 +15,8 @@
     <Folder Include="Content\Jobs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BasicRecruiter.Application\BasicRecruiter.Application.csproj" />
+  </ItemGroup>
+
 </Project>

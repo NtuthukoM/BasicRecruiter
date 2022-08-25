@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BasicRecruiter.Domain;
 
-namespace BasicRecruiter.Data
+namespace BasicRecruiter.Persistance
 {
-    internal class BasicRecruiterDbContext:DbContext
+    public class BasicRecruiterDbContext:DbContext
     {
         public DbSet<JobStatus> JobStatuses { get; set; }
         public DbSet<ApplicantStatus> ApplicantStatuses { get; set; }

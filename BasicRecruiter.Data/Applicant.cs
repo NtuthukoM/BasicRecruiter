@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicRecruiter.Data
+namespace BasicRecruiter.Domain
 {
-    internal class Applicant:BaseEntity
+    public class Applicant:BaseEntity
     {
         public string Name { get; set; }
         public string Phone { get; set; }

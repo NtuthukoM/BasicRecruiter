@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BasicRecruiter.Data
+namespace BasicRecruiter.Domain
 {
-    internal class Job:BaseEntity
+    public class Job:BaseEntity
     {
         public string Summary { get; set; }
         public string Title { get; set; }

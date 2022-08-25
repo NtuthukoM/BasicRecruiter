@@ -1,4 +1,4 @@
-﻿namespace BasicRecruiter.Data
+﻿namespace BasicRecruiter.Domain
 {
     public class BaseEntity
     {
