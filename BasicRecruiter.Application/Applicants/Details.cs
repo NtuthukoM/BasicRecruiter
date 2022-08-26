@@ -1,4 +1,5 @@
-﻿using BasicRecruiter.Application.Core;
+﻿using BasicRecruiter.Application.Applicants.Interfaces;
+using BasicRecruiter.Application.Core;
 using BasicRecruiter.Domain;
 using BasicRecruiter.Persistance;
 using MediatR;
@@ -19,15 +20,15 @@ namespace BasicRecruiter.Application.Applicants
 
         public class Handler : IRequestHandler<Query, Result<Applicant>>
         {
-            private readonly BasicRecruiterDbContext context;
+            private readonly IDetailApplicantRepository repository;
 
-            public Handler(BasicRecruiterDbContext context)
+            public Handler(IDetailApplicantRepository repository)
             {
-                this.context = context;
+                this.repository = repository;
             }
             public async Task<Result<Applicant>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var model = await context.Applicants.FindAsync(request.Id);
+                var model = await repository.GetApplicant(request.Id);
                 return Result<Applicant>.Success(model);
             }
         }

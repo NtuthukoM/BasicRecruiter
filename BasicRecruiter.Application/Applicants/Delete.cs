@@ -1,4 +1,5 @@
-﻿using BasicRecruiter.Application.Core;
+﻿using BasicRecruiter.Application.Applicants.Interfaces;
+using BasicRecruiter.Application.Core;
 using BasicRecruiter.Persistance;
 using MediatR;
 using System;
@@ -18,20 +19,20 @@ namespace BasicRecruiter.Application.Applicants
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly BasicRecruiterDbContext context;
+            private readonly IEditApplicantRepository repository;
 
-            public Handler(BasicRecruiterDbContext context)
+            public Handler(IEditApplicantRepository repository)
             {
-                this.context = context;
+                this.repository = repository;
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var model = await context.Applicants.FindAsync(request.Id);
-                if(model != null)
+                var result = await repository.SetDeletedAsync(request.Id);
+                if(result != null)
                 {
-                    model.Deleted = true;
-                    await context.SaveChangesAsync();
+                    if(result.Value)
                     return Result<Unit>.Success(Unit.Value);
+                    return Result<Unit>.Failure("Failed to delete applicant");
                 }
                 return null;
             }

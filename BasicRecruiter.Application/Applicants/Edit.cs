@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using BasicRecruiter.Application.Applicants.Interfaces;
 using BasicRecruiter.Application.Core;
 using BasicRecruiter.Domain;
 using BasicRecruiter.Persistance;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -18,25 +20,29 @@ namespace BasicRecruiter.Application.Applicants
             public Applicant Applicant { get; set; }
         }
 
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Applicant).SetValidator(new ApplicantValidator());
+            }
+        }
+
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly BasicRecruiterDbContext context;
-            private readonly IMapper mapper;
+            private readonly IEditApplicantRepository repository;
 
-            public Handler(BasicRecruiterDbContext context, IMapper mapper)
+            public Handler(IEditApplicantRepository repository)
             {
-                this.context = context;
-                this.mapper = mapper;
+                this.repository = repository;
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var model = await context.Applicants.FindAsync(request.Applicant.Id);
-                var applicant = request.Applicant;
-                if(model != null)
+
+                var result = await repository.EditAsync(request.Applicant);
+                if(result != null)
                 {
-                    mapper.Map(applicant, model);
-                    var result = await context.SaveChangesAsync() > 0;
-                    if (!result)
+                    if (!result.Value)
                         return Result<Unit>.Failure("Failed to update applicant");
                     return Result<Unit>.Success(Unit.Value);
                 }

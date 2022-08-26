@@ -1,6 +1,8 @@
-﻿using BasicRecruiter.Application.Core;
+﻿using BasicRecruiter.Application.Applicants.Interfaces;
+using BasicRecruiter.Application.Core;
 using BasicRecruiter.Domain;
 using BasicRecruiter.Persistance;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,23 +19,32 @@ namespace BasicRecruiter.Application.Applicants
             public Applicant Applicant { get; set; }
         }
 
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Applicant).SetValidator(new ApplicantValidator());
+            }
+        }
+
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly BasicRecruiterDbContext context;
+            private readonly ICreateApplicantRepository repository;
 
-            public Handler(BasicRecruiterDbContext context)
+            public Handler(ICreateApplicantRepository repository)
             {
-                this.context = context;
+                this.repository = repository;
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                await context.Applicants.AddAsync(request.Applicant);
-                var result =  await context.SaveChangesAsync() > 0;
+                bool result = await repository.Create(request);
                 if (!result)
                     return Result<Unit>.Failure("Failed to save job application");
                 return Result<Unit>.Success(Unit.Value);
 
             }
+
+
         }
     }
 }
