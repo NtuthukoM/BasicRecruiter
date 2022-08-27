@@ -3,29 +3,30 @@ using BasicRecruiter.Application.Core;
 using BasicRecruiter.Domain;
 using MediatR;
 
-namespace BasicRecruiter.Application.JobStatuses
+namespace BasicRecruiter.Application.Jobs
 {
-    public class Create
+    public class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public JobStatus JobStatus { get; set; }
+            public Job Job { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-            private readonly IJobStatusRepository repository;
+            private readonly IJobRepository repository;
 
-            public Handler(IJobStatusRepository repository)
+            public Handler(IJobRepository repository)
             {
                 this.repository = repository;
             }
+
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var response = await repository.AddAsync(request.JobStatus);
-                if (response.Id > 0)
+                var updated = await repository.UpdateAsync(request.Job);
+                if (updated)
                     return Result<Unit>.Success(Unit.Value);
-                return Result<Unit>.Failure("Failed to add Job status");
+                return Result<Unit>.Failure("Failed to update");
             }
         }
     }

@@ -2,10 +2,15 @@
 using BasicRecruiter.Application.Core;
 using BasicRecruiter.Domain;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BasicRecruiter.Application.JobStatuses
 {
-    public class Create
+    public class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {
@@ -22,10 +27,10 @@ namespace BasicRecruiter.Application.JobStatuses
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var response = await repository.AddAsync(request.JobStatus);
-                if (response.Id > 0)
+                bool updated = await repository.UpdateAsync(request.JobStatus);
+                if (updated)
                     return Result<Unit>.Success(Unit.Value);
-                return Result<Unit>.Failure("Failed to add Job status");
+                return Result<Unit>.Failure("Failed to update.");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using BasicRecruiter.Application.Contracts;
+using BasicRecruiter.Domain;
 using BasicRecruiter.Persistance;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace BasicRecruiter.Application.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T>
-        where T:class
+        where T:BaseEntity
     {
         private readonly BasicRecruiterDbContext context;
 
@@ -25,14 +26,17 @@ namespace BasicRecruiter.Application.Repositories
             return entity;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var entity = await context.Set<T>().FindAsync(id);
+            bool response = false;
             if (entity != null)
             {
-                context.Set<T>().Remove(entity);
-                await context.SaveChangesAsync();
+                entity.Deleted = true;
+                context.Entry(entity).State = EntityState.Modified;
+                response = await context.SaveChangesAsync() > 0;
             }
+            return response;
         }
 
         public async Task<bool> Exists(int id)
@@ -55,10 +59,10 @@ namespace BasicRecruiter.Application.Repositories
             return await context.Set<T>().FindAsync(id);
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
             context.Entry(entity).State = EntityState.Modified;
-            await context.SaveChangesAsync();
+            return await context.SaveChangesAsync() > 0;
         }
     }
 }

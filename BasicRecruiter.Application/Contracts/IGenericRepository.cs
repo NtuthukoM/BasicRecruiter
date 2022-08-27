@@ -13,8 +13,8 @@ namespace BasicRecruiter.Application.Contracts
         Task<List<T>> GetAllAsync();
         Task<bool> Exists(int id);
 
-        Task DeleteAsync(int id);
-        Task UpdateAsync(T entity);
+        Task<bool> DeleteAsync(int id);
+        Task<bool> UpdateAsync(T entity);
         Task<T> AddAsync(T entity);
 
     }

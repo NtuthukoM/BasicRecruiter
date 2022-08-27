@@ -1,15 +1,14 @@
 ﻿using BasicRecruiter.Application.Contracts;
 using BasicRecruiter.Application.Core;
-using BasicRecruiter.Domain;
 using MediatR;
 
 namespace BasicRecruiter.Application.JobStatuses
 {
-    public class Create
+    public class Delete
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public JobStatus JobStatus { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -22,10 +21,10 @@ namespace BasicRecruiter.Application.JobStatuses
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var response = await repository.AddAsync(request.JobStatus);
-                if (response.Id > 0)
+                bool updated = await repository.DeleteAsync(request.Id);
+                if (updated)
                     return Result<Unit>.Success(Unit.Value);
-                return Result<Unit>.Failure("Failed to add Job status");
+                return Result<Unit>.Failure("Failed to delete");
             }
         }
     }

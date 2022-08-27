@@ -16,8 +16,4 @@
     <ProjectReference Include="..\BasicRecruiter.Persistance\BasicRecruiter.Persistance.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Jobs\" />
-  </ItemGroup>
-
 </Project>
